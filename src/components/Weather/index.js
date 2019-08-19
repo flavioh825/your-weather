@@ -27,9 +27,8 @@ function Weather() {
     });
   }, []);
 
-  function callbackFunction(cb) {
-      console.log(cb);
-      getWeather(cb.lngLat.lat, cb.lngLat.lng);
+  function refreshWeather(newLocation) {
+      getWeather(newLocation.lngLat.lat, newLocation.lngLat.lng);
   }
 
   if (location === false) {
@@ -47,7 +46,7 @@ function Weather() {
   } else {
     return (
       <>
-        <h3>Clima nas suas coordenadas ({weather['weather'][0]['description']})</h3>
+        <h3>Clima em: {weather.name} ({weather['weather'][0]['description']})</h3>
         <hr />
         <ul>
           <li>Temperatura atual: {weather['main']['temp']}º</li>
@@ -56,7 +55,7 @@ function Weather() {
           <li>Pressão: {weather['main']['pressure']} hpa</li> 
           <li>Umidade: {weather['main']['humidity']}%</li>
         </ul>        
-        <Map parentCallback={callbackFunction} />
+        <Map locationInfo={refreshWeather} />
       </>
     );
   }
